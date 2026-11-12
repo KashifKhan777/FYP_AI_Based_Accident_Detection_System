@@ -1,0 +1,220 @@
+# AI-Based Accident Detection and Alert System Using ESP32
+
+An AI-based accident detection and alert system designed to detect potential vehicle accidents and automatically send an emergency alert containing the vehicle's location.
+
+The system combines an **ESP32**, **MPU6050 motion sensor**, **GPS**, **GSM**, **LCD**, **buzzer**, and an **AI/ML model trained using Edge Impulse** to create a real-time accident detection and notification system.
+
+## Project Overview
+
+Road accidents can require immediate emergency response. This project aims to detect abnormal vehicle movements associated with accidents and automatically notify a predefined contact when an accident is detected.
+
+The system continuously monitors motion data from the MPU6050 sensor. When the AI-based detection system identifies an accident, the system starts a confirmation countdown. If the user does not cancel the alert using the push button, the system obtains the vehicle's GPS location and sends an SMS through the GSM module.
+
+## Key Features
+
+- AI-based accident detection
+- Real-time motion monitoring using MPU6050
+- ESP32-based control system
+- GPS-based location detection
+- GSM-based emergency SMS notification
+- Google Maps location link in the alert
+- LCD status and countdown display
+- Buzzer-based accident warning
+- Push-button accident cancellation
+- Automatic GPS retry mechanism
+- Fallback location mechanism
+- Edge Impulse machine learning model
+
+## Hardware Components
+
+| Component | Purpose |
+|---|---|
+| ESP32 | Main microcontroller |
+| MPU6050 | Accelerometer and gyroscope data |
+| GPS Module | Determines vehicle location |
+| SIM800L GSM Module | Sends emergency SMS |
+| 16×2 I2C LCD | Displays system status |
+| Buzzer | Provides audible warning |
+| Push Button | Cancels an accidental alert |
+
+## System Workflow
+
+```text
+              MPU6050
+                 |
+                 v
+        Motion Data Collection
+                 |
+                 v
+        AI Accident Detection
+                 |
+                 v
+          Accident Detected?
+             /          \
+           No            Yes
+           |              |
+       Continue       Start 10-sec
+       Monitoring       Countdown
+                            |
+                            v
+                    Push Button Pressed?
+                       /            \
+                     Yes            No
+                      |              |
+                  Cancel Alert      Get GPS
+                                     |
+                                     v
+                              GPS Coordinates
+                                     |
+                                     v
+                              Google Maps Link
+                                     |
+                                     v
+                              GSM / SMS Alert
+```
+
+## Accident Detection
+
+The MPU6050 provides motion and acceleration data to the ESP32.
+
+An AI/ML model was trained using **Edge Impulse** using collected normal-movement and accident-related data.
+
+The trained model is used as part of the accident detection process to distinguish abnormal motion patterns from normal vehicle movement.
+
+## Dataset
+
+The machine learning dataset was collected using the MPU6050 sensor and includes examples of:
+
+- Normal driving movements
+- Straight forward movement
+- Straight backward movement
+- Gentle turns
+- Start/stop movements
+- Mixed normal driving
+- Accident-related movement data
+
+The dataset was prepared and uploaded to Edge Impulse for model training.
+
+## Emergency Alert
+
+When an accident is detected and the cancellation button is not pressed during the confirmation countdown, the system attempts to obtain the vehicle's GPS coordinates.
+
+The system then creates a Google Maps location link and sends the location through the GSM module.
+
+Example alert format:
+
+```text
+ACCIDENT DETECTED!
+
+Location:
+https://maps.google.com/?q=LATITUDE,LONGITUDE
+```
+
+## Hardware Communication
+
+The project uses different communication interfaces for the connected modules:
+
+### I2C
+
+The ESP32 communicates with the MPU6050 and LCD through I2C.
+
+### UART / Serial
+
+GPS and GSM communication use serial communication with the ESP32.
+
+### GSM
+
+The SIM800L module is used to transmit emergency SMS messages.
+
+## Software and Technologies
+
+- **Arduino IDE**
+- **ESP32**
+- **C/C++**
+- **Edge Impulse**
+- **Python** for data/model-related work
+- **Machine Learning**
+- **MPU6050**
+- **GPS**
+- **SIM800L GSM**
+- **I2C**
+- **UART**
+
+## Project Structure
+
+```text
+AI-Accident-Detection-Alert-System/
+│
+├── README.md
+│
+├── src/
+│   └── accident_detection.ino
+│
+├── ml-model/
+│   └── edge_impulse_model/
+│
+├── dataset/
+│   ├── normal/
+│   └── accident/
+│
+├── circuit/
+│   ├── circuit_diagram.png
+│   └── wiring_diagram.png
+│
+├── images/
+│   ├── prototype.jpg
+│   ├── hardware.jpg
+│   └── system.jpg
+│
+└── documentation/
+    └── Project_Report.pdf
+```
+
+## Configuration
+
+Before uploading the Arduino code to the ESP32, configure the required hardware connections and communication settings according to the project circuit.
+
+Make sure the GSM and GPS modules have appropriate power supplies and that the TX/RX connections are correctly configured.
+
+## Important
+
+Do not upload sensitive information such as:
+
+- Personal phone numbers
+- Wi-Fi passwords
+- API keys
+- Authentication tokens
+- Private credentials
+
+Replace sensitive values with placeholders before publishing the repository.
+
+## Future Improvements
+
+Possible future improvements include:
+
+- More diverse accident datasets
+- Improved model accuracy
+- GPS accuracy improvements
+- Cloud-based accident monitoring
+- Mobile application integration
+- Multiple emergency contacts
+- IoT-based live vehicle monitoring
+- Real-time dashboard for emergency responders
+
+## Project Purpose
+
+This project demonstrates the integration of **Artificial Intelligence, embedded systems, sensors, GPS, GSM communication, and real-time decision-making** to address a real-world road safety problem.
+
+---
+
+## Author
+
+**Kashif Khan**
+
+BS Information Technology
+
+AI & Machine Learning | Embedded Systems | Python
+
+## Project Status
+
+**Academic Final Year Project — Completed / Developed for educational and research purposes**
